@@ -1,5 +1,6 @@
 const adminSchema=require('../models/adminModel')
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const {st,ust,pass,num,em}=require('../validation/validation')
 
 const createAdmin= async function(req,res){
@@ -51,21 +52,29 @@ catch(error){
 const login = async (req, res)=>{
     try{
         let data = req.body;
-        const {username, password} = data;
+        const {username, password} = req.body;
         const validUser = await adminSchema.findOne({username});
         if(!validUser){
             return res.status(404).send({status: false, message: "username invalid"})
         }
         let validPassword = await bcrypt.compare(password, validUser.password)
 
-        if(!validPassword){
-            return res.status(400).send({status:false, message: "password or username is invalid"});
-        }else{
-            return res.status(200).send({status: true, message: "Logged in succesfully"});
-        }
+        if(!validPassword)return res.status(400).send({status:false, message: "password or username is invalid"});
+        let expiresIn = { expiresIn: "60s" };
+    let token = jwt.sign(
+        {
+            data: validUser ._id.toString(),
+            iat: Math.floor(Date.now() / 1000)
+        },
+        "banking",
+        expiresIn
+    );
+
+
+        return res.status(200).send({status: true, message:"Logged in successful!", data:{data:validUser._id, token: token}});
 
     }catch(err){
-        return res.status(500).send({status: false, message: err})
+        return res.status(500).send({status: false, error: err.message})
     }
 }
 

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {createAdmin, login}=require('../Controller/adminController')
+const {authentication} = require("../auth/middleware");
 
 router.get("/hey", (req, res)=>{
     res.send("<h1>badhai ho mc</h1>");

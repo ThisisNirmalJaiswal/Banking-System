@@ -9,10 +9,11 @@ const isValidObjectId = ObjectId=>{
 const authentication = (req, res, next)=>{
     try{
         let token = req.headers['x-api-key'];
+        if(!token) token = req.headers["X-API-KEY"];    
         if(!token){
             return res.status(400).send({status:false, message:"Please provide token..."})
         }
-
+        
         jwt.verify(token, "banking", (err, decode)=>{
             if(err){
                 return res.status(400).send({status:false, error:err.message})
@@ -28,16 +29,17 @@ const authentication = (req, res, next)=>{
 }
 
 
-const authorization = (req, res, next) =>{
-    try{
-        
+// const authorization = (req, res, next) =>{
+//     try{
+//         let userId = 
 
 
 
 
-    }catch(err){
-        return res.status(500).send({status: false, error:err.message});
-    }
-}
+//     }catch(err){
+//         return res.status(500).send({status: false, error:err.message});
+//     }
+// }
 
 
+module.exports = {authentication};
