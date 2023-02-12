@@ -4,6 +4,8 @@ const app = express();
 const route = require("./routes/route")
 app.use(express.json());
 
+mongoose.set("strictQuery", false);
+
 
 const URL = "mongodb+srv://nirmaljasval:8o1g7W6bqoshvXoN@cluster0.cv9nolo.mongodb.net/Banking-API";
 
