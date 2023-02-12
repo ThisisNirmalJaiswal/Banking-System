@@ -1,6 +1,6 @@
 const mongoose = require ("mongoose") 
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
     userName : {type: String ,required: [true,"please put userName"] },
 
     fatherName : {type: String ,required: [true,"please put Father Name"]},
@@ -21,11 +21,11 @@ const userSchema = mongoose.Schema({
 
     accountBalance: {type : Number , required: [true,"accountBalanceMinimum - 1000 for saving account and 10000 for currentAccount "]},
 
-    requiredThings : {type: String , enum:["passbook","atm","creditCard","loadFacility"]}
+    requiredThings : {type: String , enum:["passbook","atm","creditCard","loanFacility"]}
 
 },{timestamps:true})
 
-module.exports = mongoose.model(userCollection,userSchema)
+module.exports = mongoose.model("user",userSchema);
 
 
 
