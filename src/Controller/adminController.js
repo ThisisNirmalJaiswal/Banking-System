@@ -35,7 +35,7 @@ try{
     const hashed = await bcrypt.hash(password, 10);
     console.log(hashed);
     data.password = hashed;
-    let adminData = await adminSchema.create(data).select({_id:0})
+    let adminData = await adminSchema.create(data)
 
   
     res.status(201).send({status:true, message:adminData})
