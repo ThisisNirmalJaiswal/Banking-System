@@ -1,13 +1,14 @@
-const mongoose = require ("mongoose") 
+const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
+
     userName : {type: String ,required: [true,"please put userName"] },
 
     fatherName : {type: String ,required: [true,"please put Father Name"]},
 
     aadharCard : {type: String ,required: [true,"aadhar card mandatory"], unique: true},
 
-    panCard : {type: String ,required: [true,"pan card mandatory"], unique:true},
+   panCard : {type: String ,required: [true,"pan card mandatory"], unique:true},
 
    // officialPhoto :{},
 
@@ -25,7 +26,7 @@ const userSchema = new mongoose.Schema({
 
 },{timestamps:true})
 
-module.exports = mongoose.model("user",userSchema);
+module.exports = mongoose.model("user", userSchema);
 
 
 

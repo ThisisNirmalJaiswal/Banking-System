@@ -35,6 +35,7 @@ try{
     const hashed = await bcrypt.hash(password, 10);
     console.log(hashed);
     data.password = hashed;
+    
     let adminData = await adminSchema.create(data)
 
   
