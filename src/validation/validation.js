@@ -1,5 +1,5 @@
 const st=(value)=>{
-    return /^[A-Za-z]{7,29}$/.test(value)
+    return /^[A-Z a-z]{4,15}$/.test(value)
    
 }
 
@@ -20,5 +20,8 @@ const em=function(email){
     return /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/.test(email)
 }
 
+const isValidPincode = (num) => {
+    return /^[0-9]{6}$/.test(num);
+  }
 
-module.exports={st,ust,pass,num,em}
+module.exports={st,ust,pass,num,em,isValidPincode}

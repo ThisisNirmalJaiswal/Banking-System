@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
-const userModel = require("../Controller/adminController");
+const adminModel = require("../Controller/adminController");
+const userModel = require("../Controller/userController");
 
 const isValidObjectId = ObjectId=>{
     return mongoose.Types.ObjectId.isValid(ObjectId);
@@ -18,8 +19,8 @@ const authentication = (req, res, next)=>{
             if(err){
                 return res.status(400).send({status:false, error:err.message})
             }else{
-                let userId = decode.userId
-                req["tokenuserId"] = userId
+                let adminId = decode.adminId;
+                req["tokenAdminId"] = adminId;
                 next()
             }
         });
@@ -29,17 +30,19 @@ const authentication = (req, res, next)=>{
 }
 
 
-// const authorization = (req, res, next) =>{
-//     try{
-//         let userId = 
+const authorization = (req, res, next) =>{
+    try{
+        let tokenAdminId = req["tokenAdminId"];
+        let adminId = req.params.adminId;
+        if(tokenAdminId != adminId){
+            return res.status(403).send({status:false, message:"You are not authorised"})
+        }
+        
+        next()
+    }catch(err){
+        return res.status(500).send({status: false, error:err.message});
+    }
+}
 
 
-
-
-//     }catch(err){
-//         return res.status(500).send({status: false, error:err.message});
-//     }
-// }
-
-
-module.exports = {authentication};
+module.exports = {authentication, authorization};
