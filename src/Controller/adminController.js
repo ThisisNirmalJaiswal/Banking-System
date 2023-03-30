@@ -63,7 +63,7 @@ const login = async (req, res)=>{
         let expiresIn = { expiresIn: "60s" };
     let token = jwt.sign(
         {
-            data: validUser ._id.toString(),
+            data: validUser._id.toString(),
             iat: Math.floor(Date.now() / 1000)
         },
         "banking",
