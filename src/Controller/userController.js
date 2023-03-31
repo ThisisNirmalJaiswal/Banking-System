@@ -44,17 +44,6 @@ const createUser = async function (req, res) {
 
 
 
-const updateAccountStatus = async (req, res) => {
-    try {
-        let data = req.body;
-        let userId = req.param.userId;
-        const { accountStatus } = data
-        let updateStatus = await userSchema.findOneAndUpdate({ _id: userId }, { accountStatus: "open" }, { new: true });
-        return res.status(200).send({ status: true, message: "account updated", updateStatus })
-    } catch (err) {
-        return res.status(500).send({ status: false, error: err.message });
-    }
-}
 
 
-module.exports = { createUser,  updateAccountStatus };
+module.exports = { createUser, };

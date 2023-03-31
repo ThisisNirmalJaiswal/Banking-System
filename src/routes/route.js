@@ -18,10 +18,10 @@ router.patch("/bank/admin/status", changeStatus);
 
 
 router.post('/bank/user', createUser);
-router.put("/bank/user", authentication, authorization, updateAccountStatus )
+//router.put("/bank/user", authentication, authorization, updateAccountStatus)
 
-router.post("/bank/account", createTransaction )
-router.get("/bank/account", getTransaction )
+//router.post("/bank/account", createTransaction )
+//router.get("/bank/account", getTransaction )
 
 router.all("*", (req, res)=>{
     res.send("There is something not good :(");
