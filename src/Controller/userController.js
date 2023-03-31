@@ -41,29 +41,8 @@ const createUser = async function (req, res) {
     }
 }
 
-const getAllUsers = async (req, res) => {
-    try {
-        let data = req.query;
 
-        let users = await userSchema.find();
-        return res.status(200).send({ status: true, data: users });
-    } catch (err) {
-        return res.status(500).send({ status: false, Error: err.message });
-    }
 
-}
-
-const getUser = async (req, res) => {
-    let param = req.query;
-    if (Object.keys(param).length == 0) {
-        return res.status(404).send({ status: false, message: "Priy grahak apni jankari de nhi to maa chudaye" })
-    }
-    let user = await userSchema.find(param);
-    if (!user) {
-        return res.status(404).send({ status: false, message: "please sure that you fill ur details correctly or no data" })
-    }
-    return res.status(200).send({ status: true, data: user });
-}
 
 const updateAccountStatus = async (req, res) => {
     try {
@@ -78,4 +57,4 @@ const updateAccountStatus = async (req, res) => {
 }
 
 
-module.exports = { createUser, getAllUsers, getUser, updateAccountStatus };
+module.exports = { createUser,  updateAccountStatus };

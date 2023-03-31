@@ -1,4 +1,5 @@
 const adminSchema=require('../models/adminModel')
+const userSchema=require('../models/userModel')
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const {st,ust,pass,num,em}=require('../validation/validation')
@@ -78,4 +79,52 @@ const login = async (req, res)=>{
     }
 }
 
-module.exports={createAdmin, login}
+
+
+
+const getUser = async (req, res) => {
+    let param = req.query;
+    if (Object.keys(param).length == 0) {
+        return res.status(404).send({ status: false, message: "Priy grahak apni jankari de nhi to maa chudaye" })
+    }
+    let user = await userSchema.find(param);
+    if (!user) {
+        return res.status(404).send({ status: false, message: "please sure that you fill ur details correctly or no data" })
+    }
+    return res.status(200).send({ status: true, data: user });
+}
+
+
+
+const getAllUsers = async (req, res) => {
+    try {
+        let data = req.query;
+
+        let users = await userSchema.find();
+        return res.status(200).send({ status: true, data: users });
+    } catch (err) {
+        return res.status(500).send({ status: false, Error: err.message });
+    }
+}
+
+const getStatus=async (req,res)=>{
+    try{
+          let getData=await userSchema.find({accountStatus:"Pending"})
+          if(getData.length==0) return res.status(404).send({status:"failed",messagea:"user not found"})
+          res.status(200).send({status:"success",data:getData})
+    }
+    catch(err){
+        res.status(500).send({status:false,message:err.message})
+    }
+}
+const changeStatus=async function(req,res){
+    try {
+        let userId=req.body.userId
+        let updateStatus=await userSchema.findByIdAndUpdate(userId,{accountStatus:req.body.status},{new:true})
+        res.status(200).send({status:"success",data:updateStatus})
+    } catch (err) {
+        res.status(500).send({status:"failed",message:err.message})
+    }
+}
+
+module.exports={createAdmin, login,getUser,getAllUsers,getStatus,changeStatus}
